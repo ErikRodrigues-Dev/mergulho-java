@@ -9,6 +9,10 @@ public class Conta {
     private int numero;
     private double saldo;
 
+    Conta() {
+
+    }
+
     public Conta(Pessoa titular, int agencia, int numero ){
         Objects.requireNonNull(titular);
         this.titular = titular;
@@ -23,9 +27,12 @@ public class Conta {
         saldo = saldo + valor;
     }
 
-    public void sacar(double valor) throws IllegalAccessException {
-        if (saldo - valor < 0){
-            throw new IllegalAccessException("Saldo insuficiente");
+    public void sacar(double valor) {
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor deve ser maior que 0");
+        }
+        if (getSaldoDisponivel() - valor < 0) {
+            throw new IllegalStateException("Saldo insuficiente");
         }
         saldo = saldo - valor;
     }
@@ -49,6 +56,10 @@ public class Conta {
 
     public double getSaldo() {
         return saldo;
+    }
+
+    public double getSaldoDisponivel(){
+        return getSaldo();
     }
 
 }
